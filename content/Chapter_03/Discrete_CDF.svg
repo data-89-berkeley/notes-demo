@@ -1,0 +1,80 @@
+<svg width="500" height="350" viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Axes -->
+  <line x1="60" y1="300" x2="460" y2="300" stroke="black"></line>
+  <line x1="60" y1="300" x2="60" y2="40" stroke="black"></line>
+
+  <!-- Axis labels -->
+  <text x="455" y="320" font-size="14">x</text>
+  <text x="10" y="50" font-size="14">CDF(x)</text>
+
+  <!-- Ticks -->
+  <line x1="140" y1="295" x2="140" y2="305" stroke="black"></line>
+  <text x="135" y="325" font-size="12">2</text>
+
+  <line x1="220" y1="295" x2="220" y2="305" stroke="black"></line>
+  <text x="215" y="325" font-size="12">4</text>
+
+  <line x1="300" y1="295" x2="300" y2="305" stroke="black"></line>
+  <text x="295" y="325" font-size="12">6</text>
+
+  <!-- y-ticks -->
+  <line x1="55" y1="235" x2="65" y2="235" stroke="black"></line>
+  <text x="25" y="240" font-size="12">0.5</text>
+
+  <line x1="55" y1="190" x2="65" y2="190" stroke="black"></line>
+  <text x="30" y="195" font-size="12">1</text>
+
+  <!-- Step function (top corresponds to ~1.05) -->
+  <polyline points="
+      60 300
+      100 300
+      100 265
+      140 265
+      140 235
+      180 235
+      180 215
+      220 215
+      220 202
+      260 202
+      260 195
+      300 195
+      300 192
+      340 192
+      340 190
+      380 190
+      380 188
+      460 188
+    " fill="none" stroke="blue" stroke-width="2"></polyline>
+
+  <!-- Dotted vertical jump lines -->
+  <line x1="100" y1="300" x2="100" y2="265" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="140" y1="265" x2="140" y2="235" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="180" y1="235" x2="180" y2="215" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="220" y1="215" x2="220" y2="202" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="260" y1="202" x2="260" y2="195" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="300" y1="195" x2="300" y2="192" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="340" y1="192" x2="340" y2="190" stroke="black" stroke-dasharray="4,4"></line>
+  <line x1="380" y1="190" x2="380" y2="188" stroke="black" stroke-dasharray="4,4"></line>
+
+  <!-- Open circles (left limits) -->
+  <circle cx="100" cy="300" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="140" cy="265" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="180" cy="235" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="220" cy="215" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="260" cy="202" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="300" cy="195" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="340" cy="192" r="4" fill="white" stroke="blue"></circle>
+  <circle cx="380" cy="190" r="4" fill="white" stroke="blue"></circle>
+
+  <!-- Closed circles (CDF values) -->
+  <circle cx="100" cy="265" r="4" fill="blue"></circle>
+  <circle cx="140" cy="235" r="4" fill="blue"></circle>
+  <circle cx="180" cy="215" r="4" fill="blue"></circle>
+  <circle cx="220" cy="202" r="4" fill="blue"></circle>
+  <circle cx="260" cy="195" r="4" fill="blue"></circle>
+  <circle cx="300" cy="192" r="4" fill="blue"></circle>
+  <circle cx="340" cy="190" r="4" fill="blue"></circle>
+  <circle cx="380" cy="188" r="4" fill="blue"></circle>
+
+</svg>

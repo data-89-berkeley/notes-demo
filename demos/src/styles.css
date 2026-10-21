@@ -1,0 +1,168 @@
+/* Shared styles for every demo. Injected into each widget's shadow root by
+   lib/ui.js mount(); theme comes from the data-theme attribute it maintains. */
+
+.d89 {
+  --d89-text: #1f2328;
+  --d89-muted: #59636e;
+  --d89-border: rgba(31, 35, 40, 0.18);
+  --d89-panel: rgba(31, 35, 40, 0.04);
+  --d89-accent: #2e6fdb;
+  --d89-accent-text: #ffffff;
+  --d89-warning: #b35900;
+
+  color: var(--d89-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.d89[data-theme="dark"] {
+  --d89-text: #e6e8eb;
+  --d89-muted: #a3acb7;
+  --d89-border: rgba(230, 232, 235, 0.22);
+  --d89-panel: rgba(230, 232, 235, 0.06);
+  --d89-accent: #6ea2ff;
+  --d89-accent-text: #0b0d10;
+  --d89-warning: #ffb36b;
+}
+
+.d89 *,
+.d89 *::before,
+.d89 *::after {
+  box-sizing: border-box;
+}
+
+.d89-title {
+  font-weight: 600;
+  margin: 0;
+}
+
+.d89-hint {
+  color: var(--d89-muted);
+  margin: 0;
+}
+
+.d89-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  align-items: center;
+}
+
+.d89-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.d89-control label {
+  white-space: nowrap;
+}
+
+.d89-slider input[type="range"] {
+  width: min(16rem, 55vw);
+  accent-color: var(--d89-accent);
+}
+
+.d89-readout {
+  font-variant-numeric: tabular-nums;
+  min-width: 3.5em;
+  color: var(--d89-muted);
+}
+
+.d89 select,
+.d89-button {
+  font: inherit;
+  color: var(--d89-text);
+  background: var(--d89-panel);
+  border: 1px solid var(--d89-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+}
+
+.d89-button {
+  cursor: pointer;
+}
+
+.d89-button.d89-primary {
+  background: var(--d89-accent);
+  border-color: var(--d89-accent);
+  color: var(--d89-accent-text);
+}
+
+/* Filled styles matching ipywidgets' button_style colors, so ported demos
+   keep the originals' look (e.g. green Draw, cyan Show PDF, orange Reset). */
+.d89-button.d89-success,
+.d89-button.d89-info,
+.d89-button.d89-warning,
+.d89-button.d89-danger {
+  color: #ffffff;
+}
+
+.d89-button.d89-success {
+  background: #4caf50;
+  border-color: #4caf50;
+}
+
+.d89-button.d89-info {
+  background: #00bcd4;
+  border-color: #00bcd4;
+}
+
+.d89-button.d89-warning {
+  background: #ff9800;
+  border-color: #ff9800;
+}
+
+.d89-button.d89-danger {
+  background: #f44336;
+  border-color: #f44336;
+}
+
+.d89-button:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+.d89-button:disabled,
+.d89 select:disabled,
+.d89 input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.d89-checkbox input {
+  accent-color: var(--d89-accent);
+  margin: 0;
+}
+
+.d89-panel {
+  background: var(--d89-panel);
+  border: 1px solid var(--d89-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.d89-plots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Plotly autosizes to this box (config.responsive), so the box sets the
+   figure's height. Demos can override --d89-plot-height per plot. */
+.d89-plot {
+  flex: 1 1 320px;
+  min-width: 0;
+  height: var(--d89-plot-height, 420px);
+}
+
+.d89-error {
+  color: var(--d89-warning);
+}

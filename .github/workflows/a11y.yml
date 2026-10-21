@@ -1,0 +1,19 @@
+name: Accessibility Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  check-a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Accessibility Checks
+        uses: berkeley-cdss/myst-a11y@v1
+        with:
+          base_url: '/${{ github.event.repository.name }}'
+          exclude: "iframe[src*='youtube.com'], #movie_player"

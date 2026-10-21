@@ -1,0 +1,10 @@
+**/.DS_Store
+**/.ipynb_checkpoints
+**/__pycache__/
+
+_build/
+.env
+.venv/
+# anywidget demos: build output and dependencies
+content/_widgets/
+demos/node_modules/
