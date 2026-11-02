@@ -1,0 +1,32 @@
+/* Site-wide stylesheet, referenced from myst.yml (site.options.style). */
+
+/* Wide embeds. The theme lays the article out as a CSS grid whose direct
+   children are the notebook cells (blocks), each in the body column. A grid
+   class such as `col-page-right` given to an {anywidget} or {iframe}
+   directive lands on an element *inside* its block, where it has no effect;
+   lift it to the block so the embed spans from the body column across the
+   right margin (over the page outline), as the class intends. */
+.article-grid > .myst-jp-nb-block:has(.col-page-right) {
+  grid-column: body / page;
+}
+.article-grid > .myst-jp-nb-block:has(.col-page) {
+  grid-column: page;
+}
+.article-grid > .myst-jp-nb-block:has(.col-screen-right) {
+  grid-column: body / screen;
+}
+
+/* The theme gives every {iframe} directive a fixed 5:3 shape. The standalone
+   demo pages in the Demo Testing chapter are taller than that, so a directive
+   with `:class: demo-frame` gets a fixed height instead (the page scrolls
+   inside the frame if it is still taller). */
+.demo-frame > div {
+  padding-bottom: 0 !important;
+  height: 960px;
+}
+
+@media (max-width: 860px) {
+  .demo-frame > div {
+    height: 820px;
+  }
+}

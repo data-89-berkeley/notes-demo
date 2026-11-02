@@ -16,6 +16,9 @@ project:
     kernelName: python3
   exclude: 
     - README.md
+  # Copied as-is into the site's build/ folder (served at <site>/build/<name>).
+  static_files:
+    - demos/level-sets-gradients.html
   toc:
     - file: content/index.ipynb
     - title: Chapters
@@ -110,6 +113,7 @@ project:
             - file: content/Appendix/03_Expectation_Properties.ipynb
             - file: content/Appendix/04_Demos_Glossary.ipynb
             - file: content/Appendix/05_Content_Index.ipynb
+        - file: content/Demo_Testing/00_Demo_Testing.ipynb
 site:
   template: book-theme
   options:
@@ -119,5 +123,6 @@ site:
     hide_authors: true
     hide_myst_branding: true
     hide_outline: false
+    style: style.css
   parts:
     footer: footer.md

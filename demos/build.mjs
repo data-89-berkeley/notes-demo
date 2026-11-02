@@ -39,7 +39,8 @@ const options = {
   target: "es2020",
   minify: !watch,
   legalComments: "none",
-  loader: { ".css": "text" },
+  // .css for the shared styles; .html for standalone pages shown via lib/page_frame.js
+  loader: { ".css": "text", ".html": "text" },
   external: ["https://*"],
   logLevel: "info",
 };
