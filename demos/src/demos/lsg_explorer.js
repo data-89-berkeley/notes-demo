@@ -14,7 +14,7 @@
 // "v2") and the starting surface (a key of SURF; default "parab").
 
 import { draw, loadPlotly, purge } from "../lib/plotly.js";
-import { colors } from "../lib/theme.js";
+import { colors, isDark } from "../lib/theme.js";
 import { h, mount } from "../lib/ui.js";
 
 // ---------- Surfaces ----------
@@ -170,9 +170,12 @@ export function flatLines(lines, z) {
 
 // ---------- Theme ----------
 const X_COLOR = "#1f77b4", Y_COLOR = "#ff7f0e";
+// The plot colours as text: the orange and, in dark mode, the blue fall short of
+// a 4.5:1 contrast ratio, so readouts use darker/lighter versions of them.
+const X_TEXT = { light: "#1f77b4", dark: "#6ea2ff" }, Y_TEXT = { light: "#b35900", dark: "#ffb36b" };
 function theme() {
-  const c = colors();
-  return { text: c.text, muted: c.muted, grid: c.grid, point: c.ink, xc: X_COLOR, yc: Y_COLOR };
+  const c = colors(), mode = isDark() ? "dark" : "light";
+  return { text: c.text, muted: c.muted, grid: c.grid, point: c.ink, xc: X_COLOR, yc: Y_COLOR, xt: X_TEXT[mode], yt: Y_TEXT[mode] };
 }
 function axis3d(T, title, extra = {}) {
   return { title: { text: title }, showspikes: false, gridcolor: T.grid, zerolinecolor: T.grid,
@@ -196,13 +199,15 @@ const NO_HOVER_LINES = { x: { highlight: false }, y: { highlight: false }, z: { 
 const CSS = `
 .lsg {
   --lsg-grid: rgba(31, 35, 40, 0.12);
-  --lsg-accent-soft: rgba(46, 111, 219, 0.14);
   --lsg-x-color: ${X_COLOR};
   --lsg-y-color: ${Y_COLOR};
-  --lsg-bad: #d64545;
+  --lsg-bad: #c03535;
+  /* Selected tab / pressed toggle: 8:1 in light mode, 7.7:1 in dark (the theme accent alone is a thin 4.8:1). */
+  --lsg-on-bg: #1d4f99;
+  --lsg-on-text: #ffffff;
   display: flex; flex-direction: column; gap: 0.75rem; min-width: 0;
 }
-.d89[data-theme="dark"] .lsg { --lsg-grid: rgba(230, 232, 235, 0.14); --lsg-accent-soft: rgba(110, 162, 255, 0.2); --lsg-bad: #ff7b72; }
+.d89[data-theme="dark"] .lsg { --lsg-grid: rgba(230, 232, 235, 0.14); --lsg-bad: #ff7b72; --lsg-on-bg: #6ea2ff; --lsg-on-text: #0b0d10; }
 .lsg [hidden] { display: none !important; }
 .lsg .tabs {
   display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; align-self: flex-start;
@@ -210,9 +215,9 @@ const CSS = `
 }
 .lsg .tabs button {
   border: 0; background: transparent; color: var(--d89-muted); font: inherit; font-weight: 550;
-  padding: 7px 14px; border-radius: 7px; cursor: pointer; white-space: nowrap; transition: background .15s, color .15s;
+  padding: 7px 14px; border-radius: 7px; cursor: pointer; white-space: nowrap;
 }
-.lsg .tabs button[aria-selected="true"] { background: var(--lsg-accent-soft); color: var(--d89-accent); }
+.lsg .tabs button[aria-selected="true"] { background: var(--lsg-on-bg); color: var(--lsg-on-text); }
 .lsg .card { border: 1px solid var(--d89-border); border-radius: 12px; padding: 16px; min-width: 0; }
 .lsg .desc { margin: 0 0 14px; color: var(--d89-muted); font-size: 0.92em; }
 .lsg .desc b { color: var(--d89-text); font-weight: 600; }
@@ -231,7 +236,7 @@ const CSS = `
   font: inherit; font-size: 0.86em; font-weight: 550; padding: 5px 11px; border-radius: 7px; cursor: pointer;
   background: var(--d89-panel); color: var(--d89-text); border: 1px solid var(--d89-border);
 }
-.lsg .toggle[aria-pressed="true"] { background: var(--d89-accent); color: var(--d89-accent-text); border-color: var(--d89-accent); }
+.lsg .toggle[aria-pressed="true"] { background: var(--lsg-on-bg); color: var(--lsg-on-text); border-color: var(--lsg-on-bg); }
 .lsg .formula { font-family: "STIX Two Math", "Cambria Math", Georgia, serif; color: var(--d89-text); }
 .lsg .readout { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.86em; color: var(--d89-muted); margin: 2px 0 8px; }
 .lsg .readout span b { color: var(--d89-text); font-variant-numeric: tabular-nums; font-weight: 600; }
@@ -250,7 +255,7 @@ const CSS = `
   font: 0.92em/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--d89-text); background: var(--d89-panel);
   border: 1px solid var(--d89-border); border-radius: 7px; padding: 5px 8px; width: 280px; max-width: 100%;
 }
-.lsg .fn:focus { outline: 2px solid var(--lsg-accent-soft); border-color: var(--d89-accent); }
+.lsg .fn:focus { outline: 2px solid var(--d89-accent); outline-offset: 1px; border-color: var(--d89-accent); }
 .lsg .fn.bad { border-color: var(--lsg-bad); }
 .lsg .fnerr { color: var(--lsg-bad); font-size: 0.86em; }
 @media (max-width: 860px) {
@@ -459,7 +464,7 @@ function render({ model, el }) {
       $("v1-x0v").textContent = x0.toFixed(2); $("v1-y0v").textContent = y0.toFixed(2);
       $("v1-formula").textContent = SURFS[key].tex;
       const [z0, fx, fy] = partials(f, x0, y0);
-      $("v1-read").innerHTML = `<span>f(x₀, y₀) = <b>${fmt(z0)}</b></span><span style="color:${T.xc}">∂f/∂x = <b>${fmt(fx)}</b></span><span style="color:${T.yc}">∂f/∂y = <b>${fmt(fy)}</b></span>`;
+      $("v1-read").innerHTML = `<span>f(x₀, y₀) = <b>${fmt(z0)}</b></span><span style="color:${T.xt}">∂f/∂x = <b>${fmt(fx)}</b></span><span style="color:${T.yt}">∂f/∂y = <b>${fmt(fy)}</b></span>`;
 
       const zpad = 0.05 * (S.zmax - S.zmin || 1), zr = [S.zmin - zpad, S.zmax + zpad];
       const sx = slice(f, x0, y0, "x", lo, zr), sy = slice(f, x0, y0, "y", lo, zr);

@@ -114,6 +114,8 @@ project:
             - file: content/Appendix/04_Demos_Glossary.ipynb
             - file: content/Appendix/05_Content_Index.ipynb
         - file: content/Demo_Testing/00_Demo_Testing.ipynb
+          children:
+            - file: content/Demo_Testing/01_Embeds.ipynb
 site:
   template: book-theme
   options:
