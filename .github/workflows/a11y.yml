@@ -16,4 +16,7 @@ jobs:
         uses: berkeley-cdss/myst-a11y@v1
         with:
           base_url: '/${{ github.event.repository.name }}'
-          exclude: "iframe[src*='youtube.com'], #movie_player"
+          # .myst-footer-link: the theme's Previous/Next links are labelled
+          # "Previous: <title>" but show "<part> <title>", so axe's
+          # label-content-name-mismatch rule can flag them on any page.
+          exclude: "iframe[src*='youtube.com'], #movie_player, .myst-footer-link"
