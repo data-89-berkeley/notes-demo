@@ -73,6 +73,9 @@ The [Jupyter Book](https://jupyterbook.org/stable/) website has lots of informat
 
 If changes you've made aren't showing up the HTML after building, sometimes deleting `_build` and then building again helps. You can also run `jupyter book clean`.
 
+> [!WARNING]
+> If a demo shows an error like `Failed to resolve module specifier '…/_widgets/<name>.js'`, the demo bundle hasn't been built on this computer (`content/_widgets/` is generated, not committed). From the top level of the repo, run `npm ci --prefix demos` once, then `npm run build --prefix demos`, and restart `jupyter book start`.
+
 Some cells are hidden with tags like `remove-input` or `remove-cell`. 
 
 ### Links
